@@ -199,5 +199,5 @@ def QAOA_circ(parameters):# = np.random.uniform(0, np.pi*2, 2*p)):
             q_1=temp[0]
             q_2=temp[2]
             qml.CNOT(wires=[q_1, q_2])
-        wires=[i for i in range(n_qubits)]
-    return qml.expval.Hermitian(Hamilton,wires=[0, 1]) 
+        wiress=[i for i in range(n_qubits)]
+    return qml.expval.Hermitian(Hamilton,wires=wiress) 
