@@ -1,0 +1,11 @@
+pennylane-forest
+qiskit
+qiskit-aqua
+numpy
+scipy
+jupyter
+matplotlib
+pennylane
+pyquil
+tqdm
+pytorch
