@@ -98,6 +98,7 @@ def QAOA_circ(parameters):# = np.random.uniform(0, np.pi*2, 2*p)):
     Hamilton,pyquil_circ=set_up_QAOA_in_pyquil(beta, gamma, p)
     pyquil_circ_list=str(pyquil_circ).split('\n')
     for item in pyquil_circ_list:
+        #creates a pennylane circuit from a pyquil circuit. Only limited to the following gates: H, RX, RY, RZ, CNOT, CZ
         u_p_1=None
         q_1=None
         q_2=None
@@ -112,11 +113,26 @@ def QAOA_circ(parameters):# = np.random.uniform(0, np.pi*2, 2*p)):
             q_1=temp[temp.find(')')+2]
             qml.RZ(float(u_p_1),wires=q_1)
         elif 'RX' in item:
-            pass
+            temp=item.replace('RX(','')
+            u_p_1=temp[:temp.find(')')]
+            q_1=temp[temp.find(')')+2]
+            qml.RX(float(u_p_1),wires=q_1)
+        elif 'RY' in item:
+            temp=item.replace('RY(','')
+            u_p_1=temp[:temp.find(')')]
+            q_1=temp[temp.find(')')+2]
+            qml.RY(float(u_p_1),wires=q_1)
         elif 'CNOT' in item:
             temp=item.replace('CNOT ','')
             q_1=temp[0]
             q_2=temp[2]
             qml.CNOT(wires=[q_1, q_2])
+        elif 'CZ' in item:
+            temp=item.replace('CZ ','')
+            q_1=temp[0]
+            q_2=temp[2]
+            qml.CZ(wires=[q_1, q_2])
+        else:
+            pass
         wires=[i for i in range(n_qubits)]
     return qml.expval.Hermitian(Hamilton,wires=wires) 
